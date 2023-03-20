@@ -1,0 +1,51 @@
+logging:
+  level:
+    com:
+      ecwid:
+        consul: TRACE
+spring:
+  application:
+    name: test
+  rsocket:
+    server:
+      port: 21090
+  config:
+    import: "optional:consul:"
+  cloud:
+    discovery:
+      enabled: true
+    consul:
+      port: 8500
+      host: localhost
+      config:
+#        name:
+        watch:
+          enabled: true
+        enabled: true
+        format: YAML
+        prefixes: config
+        data-key: data
+      discovery:
+        enabled: true
+        port: ${server.port}
+        tags: isRSocket
+        management-port: ${management.server.port}
+        metadata:
+          rsocketPort: ${spring.rsocket.server.port}
+      service-registry:
+        auto-registration:
+          enabled: true
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    refresh:
+      enabled: true
+  server:
+    port: 8090
+server:
+  port: 8090

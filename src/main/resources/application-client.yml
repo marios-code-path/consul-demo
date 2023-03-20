@@ -1,0 +1,41 @@
+logging:
+  level:
+    com:
+      ecwid:
+        consul: TRACE
+
+server:
+  port: 0
+
+spring:
+  application:
+    name: test-client
+  rsocket:
+    server:
+      port: 0
+  config:
+    import: "optional:consul:"
+  cloud:
+    discovery:
+      enabled: true
+    consul:
+      port: 8500
+      host: localhost
+      config:
+        watch:
+          enabled: true
+        enabled: true
+        format: YAML
+        prefixes: config
+        data-key: data
+      discovery:
+        enabled: true
+
+  main:
+    web-application-type: none
+
+management:
+  server:
+    port: -1
+  endpoints:
+    enabled-by-default: false
